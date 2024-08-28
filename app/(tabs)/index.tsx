@@ -1,4 +1,4 @@
-import { Image, StyleSheet, Platform } from 'react-native';
+/* import { Image, StyleSheet, Platform } from 'react-native';
 
 import { HelloWave } from '@/components/HelloWave';
 import ParallaxScrollView from '@/components/ParallaxScrollView';
@@ -66,5 +66,90 @@ const styles = StyleSheet.create({
     bottom: 0,
     left: 0,
     position: 'absolute',
+  },
+});
+*/
+
+import React, { useState } from 'react';
+import { View, Text, Button, StyleSheet, TextInput } from 'react-native';
+
+export default function HomeScreen() {
+  const [input, setInput] = useState<string>('');
+  const [result, setResult] = useState<string>('');
+
+  const handlePress = (value: string) => {
+    setInput((prev) => prev + value);
+  };
+
+  const handleCalculate = () => {
+    try {
+      setResult(eval(input).toString()); // Usar eval en producción no es recomendable, pero sirve para propósitos de demostración.
+    } catch (error) {
+      setResult('Error');
+    }
+  };
+
+  const handleClear = () => {
+    setInput('');
+    setResult('');
+  };
+
+  return (
+    <View style={styles.container}>
+      <TextInput
+        style={styles.input}
+        value={input}
+        placeholder="0"
+        keyboardType="numeric"
+        onChangeText={setInput}
+      />
+      <Text style={styles.result}>{result}</Text>
+      <View style={styles.buttonContainer}>
+        <Button title="1" onPress={() => handlePress('1')} />
+        <Button title="2" onPress={() => handlePress('2')} />
+        <Button title="3" onPress={() => handlePress('3')} />
+        <Button title="+" onPress={() => handlePress('+')} />
+        <Button title="4" onPress={() => handlePress('4')} />
+        <Button title="5" onPress={() => handlePress('5')} />
+        <Button title="6" onPress={() => handlePress('6')} />
+        <Button title="-" onPress={() => handlePress('-')} />
+        <Button title="7" onPress={() => handlePress('7')} />
+        <Button title="8" onPress={() => handlePress('8')} />
+        <Button title="9" onPress={() => handlePress('9')} />
+        <Button title="*" onPress={() => handlePress('*')} />
+        <Button title="0" onPress={() => handlePress('0')} />
+        <Button title="C" onPress={handleClear} />
+        <Button title="/" onPress={() => handlePress('/')} />
+        <Button title="=" onPress={handleCalculate} />
+      </View>
+    </View>
+  );
+}
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: '#fff',
+  },
+  input: {
+    height: 60,
+    width: '80%',
+    borderColor: 'gray',
+    borderWidth: 1,
+    marginBottom: 10,
+    textAlign: 'right',
+    fontSize: 30,
+    padding: 10,
+  },
+  result: {
+    fontSize: 40,
+    marginBottom: 20,
+  },
+  buttonContainer: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    width: '80%',
   },
 });
